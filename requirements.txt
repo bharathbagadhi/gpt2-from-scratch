@@ -1,0 +1,13 @@
+# Core. Install torch for your platform first if you need a specific CUDA build:
+#   https://pytorch.org/get-started/locally/
+torch>=2.0
+numpy>=1.24
+tiktoken>=0.5
+
+# Optional: only needed to download OpenAI's released GPT-2 weights
+# (used as a weight source; none of its layers run in the forward pass).
+transformers>=4.30
+
+# Dev
+pytest>=7.4
+ruff>=0.4

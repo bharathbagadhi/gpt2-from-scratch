@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.env
+
+# Testing / tooling
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# Project artifacts -- these are large and regenerable; never commit them
+data/
+out/
+checkpoints/
+*.bin
+*.pt
+*.ckpt
+wandb/
+logs/
+
+# OS
+.DS_Store

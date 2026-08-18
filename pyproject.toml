@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gpt2-from-scratch"
+version = "0.1.0"
+description = "GPT-2 (124M) implemented from scratch in PyTorch, with DDP and FSDP training"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Bharath Bagadhi" }]
+keywords = ["gpt-2", "transformer", "language-model", "pytorch", "ddp", "fsdp"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "torch>=2.0",
+    "numpy>=1.24",
+    "tiktoken>=0.5",
+]
+
+[project.optional-dependencies]
+pretrained = ["transformers>=4.30"]
+dev = ["pytest>=7.4", "pytest-cov>=4.1", "ruff>=0.4"]
+notebooks = ["jupyter", "matplotlib"]
+
+[project.scripts]
+gpt2-train = "gpt2.train:train_from_config"
+
+[project.urls]
+Repository = "https://github.com/BharathBagadhi/gpt2-from-scratch"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q --strict-markers"
+markers = [
+    "slow: tests that download pretrained weights (deselect with '-m \"not slow\"')",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["E501", "B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = ["E402"]
