@@ -1,0 +1,19 @@
+{
+  "_comment": "Fine-tune OpenAI's GPT-2 on Shakespeare. Two changes from pretraining: LR drops ~20x (the weights are already good) and dropout goes to 0.1 (1MB of text is otherwise memorised).",
+  "data_dir": "data/tinyshakespeare",
+  "out_dir": "out/finetune",
+  "batch_size": 2,
+  "block_size": 256,
+  "grad_accum_steps": 8,
+  "max_steps": 500,
+  "warmup_steps": 50,
+  "learning_rate": 0.00003,
+  "min_lr_ratio": 0.1,
+  "weight_decay": 0.1,
+  "eval_interval": 100,
+  "eval_iters": 20,
+  "device": "auto",
+  "dtype": "auto",
+  "strategy": "single",
+  "init_from": "gpt2"
+}

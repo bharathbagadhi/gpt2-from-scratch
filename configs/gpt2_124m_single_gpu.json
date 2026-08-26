@@ -1,0 +1,21 @@
+{
+  "_comment": "GPT-2 124M on one GPU (free Colab T4 fits this). total_batch_size is in tokens; grad accumulation is derived from it, so the optimisation matches a multi-GPU run exactly.",
+  "data_dir": "data/tinyshakespeare",
+  "out_dir": "out/gpt2_124m",
+  "batch_size": 4,
+  "block_size": 512,
+  "total_batch_size": 65536,
+  "max_steps": 3000,
+  "warmup_steps": 200,
+  "learning_rate": 0.0006,
+  "min_lr_ratio": 0.1,
+  "weight_decay": 0.1,
+  "grad_clip": 1.0,
+  "eval_interval": 250,
+  "eval_iters": 50,
+  "sample_interval": 500,
+  "device": "auto",
+  "dtype": "auto",
+  "strategy": "single",
+  "init_from": "scratch"
+}

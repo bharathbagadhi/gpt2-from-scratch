@@ -1,0 +1,23 @@
+{
+  "_comment": "8-GPU DDP. total_batch_size 524288 is GPT-2's ~0.5M tokens/step. Launch with: torchrun --standalone --nproc_per_node=8 scripts/train.py --strategy ddp",
+  "data_dir": "data/fineweb_edu",
+  "out_dir": "out/gpt2_124m_ddp",
+  "batch_size": 16,
+  "block_size": 1024,
+  "total_batch_size": 524288,
+  "max_steps": 19073,
+  "warmup_steps": 715,
+  "learning_rate": 0.0006,
+  "min_lr_ratio": 0.1,
+  "weight_decay": 0.1,
+  "beta2": 0.95,
+  "grad_clip": 1.0,
+  "eval_interval": 250,
+  "eval_iters": 20,
+  "checkpoint_interval": 5000,
+  "compile": true,
+  "device": "cuda",
+  "dtype": "bfloat16",
+  "strategy": "ddp",
+  "init_from": "scratch"
+}
