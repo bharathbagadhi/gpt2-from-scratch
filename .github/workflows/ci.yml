@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: tests (py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install (CPU-only torch, keeps the runner under its disk quota)
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install numpy tiktoken pytest pytest-cov ruff
+          pip install -e .
+
+      - name: Lint
+        run: ruff check src tests scripts
+
+      - name: Test
+        # -m "not slow" skips the HuggingFace parity tests, which would download
+        # 500 MB of weights on every matrix entry.
+        run: pytest -v -m "not slow" --cov=gpt2 --cov-report=term-missing
+
+  smoke:
+    name: end-to-end smoke train
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install numpy tiktoken
+          pip install -e .
+
+      - name: Prepare data
+        run: python scripts/prepare_data.py --dataset tinyshakespeare --tokenizer char
+
+      - name: Train a nano model for 30 steps on CPU
+        run: |
+          python scripts/train.py \
+            --preset gpt2-nano \
+            --data_dir data/tinyshakespeare_char \
+            --vocab_size 128 \
+            --batch_size 4 --block_size 64 \
+            --max_steps 30 --warmup_steps 5 \
+            --eval_interval 15 --eval_iters 5 \
+            --device cpu --dtype float32
+
+      - name: Generate from the checkpoint
+        run: |
+          python scripts/sample.py \
+            --ckpt out/ckpt_final.pt \
+            --char_vocab data/tinyshakespeare_char/vocab.json \
+            --prompt "ROMEO:" --max_new_tokens 40
