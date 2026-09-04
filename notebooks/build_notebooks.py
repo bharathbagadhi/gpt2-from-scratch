@@ -50,7 +50,7 @@ SETUP = """
 import os, sys
 
 if not os.path.exists("gpt2-from-scratch"):
-    !git clone -q https://github.com/BharathBagadhi/gpt2-from-scratch.git
+    !git clone -q https://github.com/bharathbagadhi/gpt2-from-scratch.git
 %cd gpt2-from-scratch
 !pip install -q -e . 2>/dev/null
 

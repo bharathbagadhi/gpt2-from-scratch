@@ -32,7 +32,7 @@ notebooks = ["jupyter", "matplotlib"]
 gpt2-train = "gpt2.train:train_from_config"
 
 [project.urls]
-Repository = "https://github.com/BharathBagadhi/gpt2-from-scratch"
+Repository = "https://github.com/bharathbagadhi/gpt2-from-scratch"
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -6,7 +6,7 @@ No `transformers` in the forward pass; the only thing borrowed from HuggingFace 
 released weight file, which is loaded into *this* implementation and used to prove the two
 produce identical logits.
 
-[![CI](https://github.com/BharathBagadhi/gpt2-from-scratch/actions/workflows/ci.yml/badge.svg)](https://github.com/BharathBagadhi/gpt2-from-scratch/actions/workflows/ci.yml)
+[![CI](https://github.com/bharathbagadhi/gpt2-from-scratch/actions/workflows/ci.yml/badge.svg)](https://github.com/bharathbagadhi/gpt2-from-scratch/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![PyTorch](https://img.shields.io/badge/pytorch-2.0%2B-ee4c2c)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -100,7 +100,7 @@ literature uses. A 124M model scoring 30% is the correct, unflattering result.
 ## Quickstart
 
 ```bash
-git clone https://github.com/BharathBagadhi/gpt2-from-scratch.git
+git clone https://github.com/bharathbagadhi/gpt2-from-scratch.git
 cd gpt2-from-scratch
 pip install -e ".[dev,pretrained]"
 
